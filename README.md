@@ -15,7 +15,7 @@ python scripts/build_showcase.py
 python -m http.server 8765 --bind 127.0.0.1 --directory _site
 ```
 
-Open `http://127.0.0.1:8765/`. The showcase links live controls, tables, tasks, dialogs, the draft editor, content panels and results reader. All examples use synthetic data and in-memory adapters; nothing executes shell commands or accesses your filesystem. The browser runs ordinary JavaScript modules. GitHub Pages, Jekyll or another static host can serve the same files with no Python service at runtime. Hosting is prepared but no public demo URL is claimed live yet; see [deployment and privacy gates](docs/public-release.md).
+Open `http://127.0.0.1:8765/`, or try the [live widget showcase](https://unixwzrd.ai/localops-ui-kit/). The showcase links controls, tables, tasks, dialogs, the draft editor, content panels and results reader. All examples use synthetic data and in-memory adapters; nothing executes shell commands or accesses your filesystem. The browser runs ordinary JavaScript modules. GitHub Pages, Jekyll or another static host can serve the same files with no Python service at runtime. See [deployment and privacy gates](docs/public-release.md).
 
 ## Repository layout
 

@@ -13,6 +13,7 @@ coverage/
 /docs/consumer-handoffs/
 /private/
 /output/
+/.playwright-cli/
 /_site/
 /.env
 /.env.*
