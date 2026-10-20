@@ -6,6 +6,7 @@ import importlib.util
 import json
 import subprocess
 import threading
+import tomllib
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -15,6 +16,22 @@ from localops_ui_testkit import assert_layout, measure_layout
 from playwright.sync_api import expect
 
 REPOSITORY = Path(__file__).resolve().parents[1]
+
+
+def test_readme_release_install_examples_and_badge_targets():
+    readme = (REPOSITORY / "README.md").read_text()
+    version = tomllib.loads((REPOSITORY / "pyproject.toml").read_text())["project"]["version"]
+    release = f"git+https://github.com/unixwzrd/localops-ui-kit.git@v{version}"
+    assert f'python -m pip install "localops-ui @ {release}"' in readme
+    assert f'python -m pip install "localops-ui[all] @ {release}"' in readme
+    assert f'"localops-ui-testkit @ {release}#subdirectory=packages/python-testkit"' in readme
+    assert "## Installation\n" in readme
+    assert "### Development version\n" in readme
+    assert "### Standalone demo\n" in readme
+    badges = next(line for line in readme.splitlines() if line.startswith("[![Python]"))
+    assert "](#installation)" in badges and "](LICENSE)" in badges
+    assert readme.index(badges) > readme.index("docs/assets/localops-ui-kit-banner.png")
+    assert "pypi.org" not in badges
 
 
 def load_script(name: str):

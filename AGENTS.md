@@ -79,7 +79,7 @@ Treat current architecture and compatibility documents as authority. Planning ma
 
 ## Testing And Validation
 
-Use the Python-authoritative workflow. If the command harness sterilizes `PATH`, invoke the `venvutil` interpreter explicitly:
+Use the Python-authoritative workflow with a Python 3.12+ interpreter from your chosen environment. If the command harness sterilizes `PATH`, use its absolute executable path; do not hardcode another developer's environment:
 
 ```bash
 PY=python3.12
