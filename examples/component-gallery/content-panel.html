@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Content panel harness</title><link rel="stylesheet" href="../../packages/web/static/styles.css"></head>
+<body><script type="module">
+import {ContentPanel,operatorShell,element,button} from "../../packages/web/static/index.js";
+const draft=element("textarea",{"aria-label":"Underlying draft",value:"Unchanged draft text"});
+const fallback=button({label:"Return destination"});
+const documentContent=element("article",{},element("h3",{text:"Synthetic document"}),
+  element("input",{"aria-label":"Panel note",value:"Retained note"}),
+  element("table",{},element("caption",{text:"Supplied table"}),element("tbody",{},element("tr",{},element("td",{text:"Synthetic cell"})))),
+  element("pre",{},element("code",{text:"literal example\n".repeat(12)})),
+  ...Array.from({length:30},(_,i)=>element("p",{text:`Section ${i}: ${"Plain supplied content. ".repeat(10)}`})),
+  element("a",{href:"#synthetic-destination",text:"Supplied link"}));
+const changes=[];
+const panel=new ContentPanel({id:"document-panel",title:"Document help",description:"Application-supplied content",content:documentContent,
+  fallbackFocus:fallback,onOpenChange:open=>changes.push({open}),onExpandedChange:expanded=>changes.push({expanded})});
+const opener=button({label:"Open help",onClick:()=>panel.open({opener})});
+document.body.append(operatorShell({title:"Panel harness",navigation:[],content:element("div",{},opener,fallback,draft)}));
+window.panelHarness={panel,opener,fallback,draft,documentContent,changes};
+</script></body></html>

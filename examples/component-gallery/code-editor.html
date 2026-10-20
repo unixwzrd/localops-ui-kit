@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Code editor harness</title><link rel="stylesheet" href="../../packages/web/static/styles.css"></head>
+<body><script type="module">
+import {CodeEditor, operatorShell} from "../../packages/web/static/index.js";
+const editor = new CodeEditor({id:"draft-editor",label:"Session draft",onChange:s=>window.lastEditorChange=s,
+  onSelection:s=>window.lastEditorSelection=s,onCopy:s=>window.copiedDraft=s,onExport:s=>window.exportedDraft=s});
+document.body.append(operatorShell({title:"Editor harness",navigation:[],content:editor.root}));
+editor.setDocument({id:"document-a",revision:1,text:Array.from({length:100},(_,i)=>`${i+1}: synthetic plain text`).join("\n"),readOnly:false});
+window.editorHarness=editor;
+</script></body></html>

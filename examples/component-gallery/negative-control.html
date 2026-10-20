@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Layout oracle negative control</title>
+    <link rel="stylesheet" href="../../packages/web/static/styles.css" />
+    <style>
+      main {
+        height: 120vh;
+        padding: 2rem;
+      }
+      .bad-overlay {
+        background: #a32735;
+        bottom: 0;
+        color: white;
+        height: 6rem;
+        left: 0;
+        position: fixed;
+        right: 0;
+        z-index: 100;
+      }
+      .covered {
+        bottom: 1rem;
+        left: 1rem;
+        position: fixed;
+        z-index: 1;
+      }
+      .clipped {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 4rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main data-layout-pane>
+      <label class="clipped" data-layout-label
+        >Intentionally clipped label</label
+      >
+      <button class="lui-button covered">Covered control</button>
+    </main>
+    <div class="bad-overlay">
+      Intentional sticky/fixed overlay negative control
+    </div>
+  </body>
+</html>

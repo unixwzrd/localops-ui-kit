@@ -1,0 +1,29 @@
+{
+  "schema_version": "1",
+  "toolkit_version": "0.2.0",
+  "ui_schema_version": "1",
+  "web_api_version": "0.1.5",
+  "python_api_version": "0.1.4",
+  "additive_changes": [
+    "0.2.0 public-preview packaging, grouped widget reference and static browser showcase; no component API changes from 0.1.5",
+    "ContentPanel trusted-DOM or literal-text modal surface, expansion, focus recovery and composition-aware single-Escape dismissal",
+    "CodeEditor native textarea controller with explicit draft operations and bounded history",
+    "ResultReader direct controller with revisioned presentation and identity-checked block reveal",
+    "operatorShell retains its HTMLElement return with additive closeNavigation({focusTarget?})",
+    "Canonical browser assets remain packages/web/static and installed localops_ui/static; bytes are not transpiled"
+  ],
+  "consumers": [
+    {
+      "id": "existing-static-asset-consumers",
+      "impact": "additive",
+      "changed_contracts": [],
+      "required_actions": [
+        "Qualify the exact new wheel or vendored asset hashes independently; package version is not consumer acceptance",
+        "Keep transport, authorization, commands, document parsing and domain interpretation application-owned",
+        "Retain native-dialog nesting restrictions documented in the adoption guide",
+        "Direct ContentPanel, CodeEditor and ResultReader components have no dedicated manifest or terminal renderer"
+      ],
+      "validation": "0.2.0-not-tested-in-consumers"
+    }
+  ]
+}

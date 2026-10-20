@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Try LocalOps UI Kit native browser controls using synthetic data. No backend or JavaScript framework required.">
+  <title>LocalOps UI Kit — widget showcase</title>
+  <link rel="stylesheet" href="../../packages/web/static/styles.css">
+  <link rel="stylesheet" href="./showcase.css">
+</head>
+<body>
+  <a href="#widgets" class="skip-link">Skip to widgets</a>
+  <header>
+    <p>LocalOps UI Kit · 0.2.0 preview</p>
+    <h1>Widgets you can try.</h1>
+    <p>Native JavaScript and CSS for Python-first applications. This showcase uses synthetic data and in-memory callbacks: no backend, filesystem access, or commands.</p>
+    <button id="theme" type="button" class="lui-button" aria-pressed="false">Dark mode</button>
+    <nav aria-label="Project resources">
+      <a href="https://github.com/unixwzrd/localops-ui-kit/blob/main/docs/widget-guide.md">Widget reference</a>
+      <a href="https://github.com/unixwzrd/localops-ui-kit/blob/main/docs/adoption-guide.md">Integration guide</a>
+      <a href="https://github.com/unixwzrd/localops-ui-kit">Source and license</a>
+    </nav>
+  </header>
+  <main id="widgets" tabindex="-1">
+    <h2>Explore by group</h2>
+    <div class="showcase-grid">
+      <section><h3>Controls and states</h3><p>Buttons, icon/copy controls, status badges, empty/loading/warning/error views, numeric fields and synchronized sliders.</p><a href="../component-gallery/">Try the component gallery</a></section>
+      <section><h3>Layout and navigation</h3><p>Responsive operator shell, keyboard tabs, disclosures, light/dark tokens and accessible message dialogs.</p><a href="../component-gallery/">Explore layouts and dialogs</a></section>
+      <section><h3>Data and tasks</h3><p>Sort, resize, hide and reorder table columns. Resolve synthetic paths, cancel/retry an in-memory task and display derived chart data.</p><a href="../component-gallery/">Try data controls</a></section>
+      <section><h3>Content panels</h3><p>Open a responsive modal reader, expand it, retain its input state and close with Escape. Content is consumer-trusted DOM or literal text.</p><a href="../component-gallery/content-panel.html">Open content panel demo</a></section>
+      <section><h3>Draft editor</h3><p>Edit a synthetic document with line numbers and bounded undo/redo. Copy/export callbacks in this harness only capture intents; they do not save or download files.</p><a href="../component-gallery/code-editor.html">Open editor demo</a></section>
+      <section><h3>Results and reading</h3><p>Select synthetic results, follow blocks and move between list and reader on small screens. Loading and errors come from the example adapter.</p><a href="../component-gallery/result-reader.html">Open results reader demo</a></section>
+    </div>
+    <h2>What runs here?</h2>
+    <p>Everything runs in your browser. Preferences reset on reload. Task and path actions change example data, not your machine. The copy control requests browser clipboard permission on HTTPS or localhost. Use your browser's Back command to return from focused demos.</p>
+    <p>WebUI is primary. Textual and Rich support shared semantic definitions with documented fallbacks; the direct editor, content panel and results reader do not claim terminal parity. See the widget reference for APIs, adapter responsibilities and limitations.</p>
+  </main>
+  <footer>MIT licensed · No tracking, CDN, frontend build or application service.</footer>
+  <script type="module">
+    const toggle = document.querySelector('#theme');
+    toggle.addEventListener('click', () => {
+      const dark = document.documentElement.dataset.theme !== 'dark';
+      document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      toggle.setAttribute('aria-pressed', String(dark));
+    });
+  </script>
+</body>
+</html>

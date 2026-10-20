@@ -1,0 +1,25 @@
+.gallery-stack {
+  display: grid;
+  gap: var(--lui-space-6);
+}
+.gallery-section {
+  background: var(--lui-color-surface);
+  border: var(--lui-border);
+  border-radius: var(--lui-radius-md);
+  display: grid;
+  gap: var(--lui-space-4);
+  min-width: 0;
+  padding: var(--lui-space-4);
+}
+.gallery-section > h2 {
+  margin: 0;
+}
+.gallery-row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lui-space-2);
+}
+.gallery-table .lui-data-table {
+  min-width: 52rem;
+}
