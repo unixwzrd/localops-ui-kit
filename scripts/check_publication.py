@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import re
 import subprocess
 from pathlib import Path
@@ -12,6 +13,17 @@ PRIVATE_PREFIXES = ("docs/consumer-handoffs/", "private/", "output/", "_site/")
 HOME_PATH = re.compile(r"/(?:Users|home)/[A-Za-z0-9_.-]+/")
 CHAT_ID = re.compile(r"\b[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}\b")
 SECRET = re.compile(r"\b(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|sk-[A-Za-z0-9]{32,})\b")
+# Reviewed product illustration only: no blanket exemption for arbitrary binary files.
+REVIEWED_BINARIES = {
+    "docs/assets/localops-ui-kit-banner.png": "f0b4f47a9432bf2bb0232444df148c1e4278e1d5417f901935941e16cbd1429d",
+}
+
+
+def inspect_binary(name: str, data: bytes) -> list[str]:
+    """Accept only the exact manually reviewed illustration bytes."""
+    if REVIEWED_BINARIES.get(name) != hashlib.sha256(data).hexdigest():
+        return [f"Binary requires manual publication review: {name}"]
+    return []
 
 
 def inspect_text(name: str, text: str) -> list[str]:
@@ -41,10 +53,13 @@ def check(repository: Path, *, history: bool = False) -> list[str]:
         path = repository / name
         if not path.is_file():
             continue
+        if name in REVIEWED_BINARIES:
+            errors.extend(inspect_binary(name, path.read_bytes()))
+            continue
         try:
             errors.extend(inspect_text(name, path.read_text(encoding="utf-8")))
         except UnicodeDecodeError:
-            errors.append(f"Binary requires manual publication review: {name}")
+            errors.extend(inspect_binary(name, path.read_bytes()))
     if history:
         past = subprocess.run(
             ["git", "log", "--all", "--format=%h", "--", "docs/consumer-handoffs/"],

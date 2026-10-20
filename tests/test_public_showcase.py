@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import subprocess
 import threading
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -45,7 +46,12 @@ def showcase(tmp_path_factory):
 
 def test_site_allowlist_and_reference_completeness(showcase):
     _, output = showcase
-    assert not (output / "docs").exists()
+    assert sorted(str(path.relative_to(output)) for path in (output / "docs").rglob("*") if path.is_file()) == [
+        "docs/assets/localops-ui-kit-banner.png"
+    ]
+    assert (output / "docs/assets/localops-ui-kit-banner.png").read_bytes() == (
+        REPOSITORY / "docs/assets/localops-ui-kit-banner.png"
+    ).read_bytes()
     assert not (output / "examples/component-gallery/negative-control.html").exists()
     assert not (output / "examples/component-gallery/manifest.html").exists()
     manifest = json.loads((REPOSITORY / "packages/web/assets.json").read_text())
@@ -66,6 +72,20 @@ def test_publication_guard_detects_private_material():
     assert "home path" in guard.inspect_text("sample", home)[0]
     assert guard.inspect_text("sample", "ordinary widget documentation") == []
     assert "docs/consumer-handoffs/" in guard.PRIVATE_PREFIXES
+
+
+def test_publication_guard_pins_reviewed_banner_bytes(tmp_path):
+    guard = load_script("check_publication")
+    name = "docs/assets/localops-ui-kit-banner.png"
+    data = (REPOSITORY / name).read_bytes()
+    assert guard.inspect_binary(name, data) == []
+    assert guard.inspect_binary(name, data + b"modified")
+    assert guard.inspect_binary("unreviewed.png", data)
+    subprocess.run(["git", "init", "--quiet", str(tmp_path)], check=True)
+    replacement = tmp_path / name
+    replacement.parent.mkdir(parents=True)
+    replacement.write_text("Text masquerading as the approved image")
+    assert guard.check(tmp_path) == [f"Binary requires manual publication review: {name}"]
 
 
 def test_public_snapshot_refuses_private_paths_and_overwrites(tmp_path):
@@ -98,6 +118,9 @@ def test_showcase_responsive_theme_and_links(page, showcase, viewport, theme):
     page.set_viewport_size({"width": viewport[0], "height": viewport[1]})
     page.goto(f"{base}/")
     expect(page.get_by_role("heading", name="Widgets you can try.")).to_be_visible()
+    banner = page.get_by_role("img", name="LocalOps UI Kit — Python-first · WebUI · Textual · Rich")
+    expect(banner).to_be_visible()
+    assert banner.evaluate("image => image.complete && image.naturalWidth === 1983")
     page.get_by_role("button", name="Dark mode").focus()
     if theme == "dark":
         page.keyboard.press("Space")

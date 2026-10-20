@@ -1,8 +1,38 @@
 # LocalOps UI Kit
 
+![LocalOps UI Kit — Python-first · WebUI · Textual · Rich](docs/assets/localops-ui-kit-banner.png)
+
 LocalOps UI Kit is a Python-first, framework-independent foundation for local-first operator interfaces. Define a strict semantic UI once and render it through the browser WebUI, Textual, or Rich. The WebUI is authored as standards-based JavaScript ES modules and CSS that a Python application can serve unchanged. No JavaScript package manager, compiler, transpiler, bundler, or frontend framework is required.
 
 The toolkit contains no MLX, model lifecycle, code-analysis, route, error-envelope, daemon, or backend-framework semantics. Applications supply data and behavior through adapters and callbacks.
+
+## Install from GitHub
+
+Python **3.12 or newer** and Git are required for a Git-based install. Once the repository is public, no GitHub account, token or PyPI release is needed:
+
+```bash
+python -m pip install "localops-ui @ git+https://github.com/unixwzrd/localops-ui-kit.git@main"
+```
+
+For the optional Rich CLI and Textual TUI renderers:
+
+```bash
+python -m pip install "localops-ui[all] @ git+https://github.com/unixwzrd/localops-ui-kit.git@main"
+```
+
+Use `[cli]` or `[tui]` instead of `[all]` when only one terminal renderer is needed. Production applications should pin an independently qualified full commit rather than the moving `main` branch; the reviewed 0.2.0 source baseline is:
+
+```bash
+python -m pip install "localops-ui @ git+https://github.com/unixwzrd/localops-ui-kit.git@da0b0c991524089a78bacb51030f0226f47421bd"
+```
+
+The optional browser/layout test kit is a separate package in this repository:
+
+```bash
+python -m pip install "localops-ui-testkit @ git+https://github.com/unixwzrd/localops-ui-kit.git@main#subdirectory=packages/python-testkit"
+```
+
+These commands use [pip's supported VCS installation syntax](https://pip.pypa.io/en/stable/topics/vcs-support/). Python builds and installs the package; its native JavaScript/CSS assets are included unchanged. Node/npm is not required. Installing the toolkit does not start a server or application. The test kit does not install browser binaries automatically. Neither package is published to PyPI; `pip install localops-ui` alone is not the documented installation path.
 
 ## Widgets, documentation and demo
 

@@ -5,6 +5,7 @@
 Public-preview preparation. No component API changes from the 0.1.5 candidate: browser API remains 0.1.5, Python API remains 0.1.4 and manifest schema remains 1. Package versions and API versions serve different purposes.
 
 - Added a grouped widget reference and a browser-only showcase using synthetic, in-memory adapters.
+- Added project banner artwork for the README/showcase and documented direct pip installation from GitHub, optional renderer extras and reproducible commit pins.
 - Added a Python-only, allowlisted static-site assembly command and manual GitHub Pages deployment workflow. No Node runtime, bundler, CDN or application backend is needed.
 - Excluded local consumer journals, environment files, generated evidence and site output from future commits. Public compatibility information describes contracts, not private consumer qualification records.
 - Included the previously local ContentPanel addition and its populated-search Escape fix. Plain non-composing Escape closes the innermost panel, preserving the query and restoring focus; modified shortcuts and composition are not intercepted.

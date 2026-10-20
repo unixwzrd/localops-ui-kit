@@ -26,6 +26,7 @@ def build(repository: Path, output: Path) -> list[str]:
     files = [Path("packages/web/static") / name for name in [*manifest["modules"], manifest["stylesheet"]]]
     files.extend(Path("examples/component-gallery") / name for name in GALLERY_FILES)
     files.extend(Path("examples/showcase") / name for name in SHOWCASE_FILES)
+    files.append(Path("docs/assets/localops-ui-kit-banner.png"))
     for relative in files:
         source = repository / relative
         if not source.is_file() or source.is_symlink() or not source.resolve().is_relative_to(repository.resolve()):
